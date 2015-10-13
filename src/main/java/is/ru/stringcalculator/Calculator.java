@@ -6,6 +6,11 @@ public class Calculator {
 
 		if(text == "") return 0;
 
-		return Integer.parseInt(text);
+		String[] numbers = text.split(",");
+
+		if(numbers.length > 1)
+			return Integer.parseInt(numbers[0]) + Integer.parseInt(numbers[1]);
+
+		return Integer.parseInt(numbers[0]);
 	}
 }
