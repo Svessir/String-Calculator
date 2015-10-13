@@ -7,10 +7,16 @@ public class Calculator {
 		if(text == "") return 0;
 
 		String[] numbers = text.split(",");
+		int sum = 0;
 
-		if(numbers.length > 1)
-			return Integer.parseInt(numbers[0]) + Integer.parseInt(numbers[1]);
+		for(String number : numbers)
+			sum += toInt(number);
 
-		return Integer.parseInt(numbers[0]);
+		return sum;
+	}
+
+	private static int toInt(String text)
+	{
+		return Integer.parseInt(text);	
 	}
 }

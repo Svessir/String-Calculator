@@ -22,4 +22,12 @@ public class CalculatorTest {
 	public void testTwoNumbers() {
 		assertEquals(3, Calculator.add("1,2"));
 	}
+
+	@Test 
+	public void testMultipleNumbers()
+	{
+		assertEquals(10, Calculator.add("1,3,4,2"));
+		assertEquals(16, Calculator.add("8,8"));
+		assertEquals(79, Calculator.add("45,15,5,5,8,1"));
+	}
 }
