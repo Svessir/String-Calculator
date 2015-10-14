@@ -67,15 +67,28 @@ public class Calculator {
 
 		Matcher matcher = Pattern.compile("\\[(.*?)\\]").matcher(delimAndNumbers[0]);
 
-		String customDelimiter = (matcher.find() == true ) ? matcher.group(0) : null;
+		String customDelimiter = null;
 
-		customDelimiter = (customDelimiter != null) ? customDelimiter.substring(1, customDelimiter.length() - 1) : delimAndNumbers[0].substring(2,3);
+		while(matcher.find())
+		{
+			customDelimiter = matcher.group();
+			customDelimiter = customDelimiter.substring(1, customDelimiter.length() - 1);
+			text = replaceCustomDelimiter(text, customDelimiter);	
+		}
+
+		if(customDelimiter == null) 
+			text = replaceCustomDelimiter(text, delimAndNumbers[0].substring(2,3));
 		
-		return text.replaceAll(Pattern.quote(customDelimiter), defaultDelim);
+		return text;
 	}
 
 	private static boolean isNegetive(int number)
 	{
 		return number < 0;
+	}
+
+	private static String replaceCustomDelimiter( String text, String customDelimiter )
+	{
+		return text.replaceAll(Pattern.quote(customDelimiter), defaultDelim);
 	}
 }

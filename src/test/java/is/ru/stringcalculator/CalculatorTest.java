@@ -80,5 +80,12 @@ public class CalculatorTest {
 	public void testCustomDelimiterOfUnknownLength()
 	{
 		assertEquals(3, Calculator.add("//[ttt]\n1ttt2"));
+		assertEquals(6, Calculator.add("//[***]\n1***2***3"));
+	}
+
+	@Test
+	public void testMultipleUnknownDelimiters()
+	{
+		assertEquals(6, Calculator.add("//[*][%]\n1*2%3"));
 	}
 }
