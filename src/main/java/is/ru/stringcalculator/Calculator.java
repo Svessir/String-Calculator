@@ -6,6 +6,7 @@ public class Calculator {
 
 	private static String defaultDelim = ",";
 	private static String delimiterSpecifier = "//";
+	private static int maxInt = 1000;
 
 	public static int add(String text) {
 
@@ -32,7 +33,7 @@ public class Calculator {
 				negetiveNumbers += number;
 			}
 
-			sum += num;
+			sum += (num > maxInt) ? 0 : num;
 		}
 		
 		if(negetiveNumbers != "") 

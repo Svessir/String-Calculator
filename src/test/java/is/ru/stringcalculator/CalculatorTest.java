@@ -42,8 +42,7 @@ public class CalculatorTest {
 	{
 		assertEquals(3,Calculator.add("//;\n1;2"));
 		assertEquals(3,Calculator.add("//$\n1$2"));
-		assertEquals(3,Calculator.add("//b\n1b2"));
-	}
+		assertEquals(3,Calculator.add("//b\n1b2"));	}
 
 	@Test
 	public void testOneNegetiveInput()
@@ -69,5 +68,11 @@ public class CalculatorTest {
 		catch( IllegalArgumentException e ) {
 			assertEquals("Negatives not allowed: -4,-5", e.getMessage());
 		}
+	}
+
+	@Test
+	public void testIgnoreLargerThanThousand()
+	{
+		assertEquals(2, Calculator.add("1001,2"));
 	}
 }
