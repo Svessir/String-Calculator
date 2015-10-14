@@ -1,6 +1,6 @@
 package is.ru.stringcalculator;
 
-import java.util.regex.Pattern;
+import java.util.regex.*;
 
 public class Calculator {
 
@@ -12,7 +12,7 @@ public class Calculator {
 
 		if(text == "") return 0;
 
-		if(isCustomDelimiter(text)) text = fixInput(text); 
+		text = fixInput(text); 
 
 		String[] numbers = splitIntoStringNumbers(text);
 
@@ -60,9 +60,18 @@ public class Calculator {
 
 	private static String fixInput(String text)
 	{
-		text = text.replaceFirst(delimiterSpecifier, "");
+		if(!isCustomDelimiter(text)) return text;
+
 		String[] delimAndNumbers = text.split("\\r?\\n", 2);
-		return delimAndNumbers[1].replaceAll(Pattern.quote(delimAndNumbers[0]), defaultDelim);
+		text = delimAndNumbers[1];
+
+		Matcher matcher = Pattern.compile("\\[(.*?)\\]").matcher(delimAndNumbers[0]);
+
+		String customDelimiter = (matcher.find() == true ) ? matcher.group(0) : null;
+
+		customDelimiter = (customDelimiter != null) ? customDelimiter.substring(1, customDelimiter.length() - 1) : delimAndNumbers[0].substring(2,3);
+		
+		return text.replaceAll(Pattern.quote(customDelimiter), defaultDelim);
 	}
 
 	private static boolean isNegetive(int number)
