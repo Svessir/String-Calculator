@@ -2,11 +2,16 @@ package is.ru.stringcalculator;
 
 public class Calculator {
 
+	private static String defaultDelim = ",";
+	private static String delimiterSpecifier = "//";
+
 	public static int add(String text) {
 
 		if(text == "") return 0;
 
-		String[] numbers = split(text);
+		if(isCustomDelimiter(text)) text = fixInput(text); 
+
+		String[] numbers = splitIntoStringNumbers(text);
 
 		return sum(numbers);
 	}
@@ -21,14 +26,26 @@ public class Calculator {
 		return sum;
 	}
 
-	private static String[] split(String text)
+	private static String[] splitIntoStringNumbers(String text)
 	{
-		return text.split("(\\r?\\n)|(,)");
+		return text.split("\\r?\\n|" + defaultDelim );
 	}
 
 	private static int toInt(String text)
 	{
 		if(text == "") return 0;
 		return Integer.parseInt(text);
+	}
+
+	private static boolean isCustomDelimiter(String text)
+	{
+		return text.startsWith(delimiterSpecifier);
+	}
+
+	private static String fixInput(String text)
+	{
+		text = text.replaceFirst(delimiterSpecifier, "");
+		String[] split = text.split("\\r?\\n", 2);
+		return split[1].replaceAll(split[0], defaultDelim);
 	}
 }
