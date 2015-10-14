@@ -41,6 +41,8 @@ public class CalculatorTest {
 	public void testUnknownDelimiter()
 	{
 		assertEquals(3,Calculator.add("//;\n1;2"));
+		assertEquals(3,Calculator.add("//$\n1$2"));
+		assertEquals(3,Calculator.add("//b\n1b2"));
 	}
 
 	@Test

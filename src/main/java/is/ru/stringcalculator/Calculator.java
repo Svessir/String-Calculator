@@ -1,5 +1,7 @@
 package is.ru.stringcalculator;
 
+import java.util.regex.Pattern;
+
 public class Calculator {
 
 	private static String defaultDelim = ",";
@@ -59,7 +61,7 @@ public class Calculator {
 	{
 		text = text.replaceFirst(delimiterSpecifier, "");
 		String[] delimAndNumbers = text.split("\\r?\\n", 2);
-		return delimAndNumbers[1].replaceAll(delimAndNumbers[0], defaultDelim);
+		return delimAndNumbers[1].replaceAll(Pattern.quote(delimAndNumbers[0]), defaultDelim);
 	}
 
 	private static boolean isNegetive(int number)
