@@ -51,8 +51,21 @@ public class CalculatorTest {
 			Calculator.add("-1,2,3");
 			fail("Should have thrown IllegalArgumentException");
 		} 
-		catch( IllegalArgumentException e) {
+		catch( IllegalArgumentException e ) {
 			assertEquals("Negatives not allowed: -1", e.getMessage());
+		}
+	}
+
+	@Test
+	public void testMultipleNegetiveInputs()
+	{
+		try {
+
+			Calculator.add("2,-4,3,-5");
+			fail("Should have thrown IllegalArgumentException");
+		}
+		catch( IllegalArgumentException e ) {
+			assertEquals("Negatives not allowed: -4,-5", e.getMessage());
 		}
 	}
 }

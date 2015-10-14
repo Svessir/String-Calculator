@@ -19,16 +19,22 @@ public class Calculator {
 	private static int sum(String[] stringNumbers)
 	{
 		int sum = 0, num;
+		String negetiveNumbers = "";
 
 		for(String number : stringNumbers)
 		{
 			num = toInt(number);
 
-			if(isNegetive(num)) throw new IllegalArgumentException("Negatives not allowed: " + number);
+			if(isNegetive(num)) {
+				negetiveNumbers = (negetiveNumbers == "") ? negetiveNumbers : negetiveNumbers + ",";
+				negetiveNumbers += number;
+			}
 
 			sum += num;
 		}
 		
+		if(negetiveNumbers != "") 
+			throw new IllegalArgumentException("Negatives not allowed: " + negetiveNumbers);
 
 		return sum;
 	}
@@ -52,8 +58,8 @@ public class Calculator {
 	private static String fixInput(String text)
 	{
 		text = text.replaceFirst(delimiterSpecifier, "");
-		String[] split = text.split("\\r?\\n", 2);
-		return split[1].replaceAll(split[0], defaultDelim);
+		String[] delimAndNumbers = text.split("\\r?\\n", 2);
+		return delimAndNumbers[1].replaceAll(delimAndNumbers[0], defaultDelim);
 	}
 
 	private static boolean isNegetive(int number)
