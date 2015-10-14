@@ -10,7 +10,7 @@ public class Calculator {
 
 	public static int add(String text) {
 
-		if(text == "") return 0;
+		if(text.isEmpty()) return 0;
 
 		text = fixInput(text); 
 
@@ -36,7 +36,7 @@ public class Calculator {
 			sum += (num > maxInt) ? 0 : num;
 		}
 		
-		if(negetiveNumbers != "") 
+		if(!negetiveNumbers.isEmpty()) 
 			throw new IllegalArgumentException("Negatives not allowed: " + negetiveNumbers);
 
 		return sum;
