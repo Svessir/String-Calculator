@@ -18,10 +18,17 @@ public class Calculator {
 
 	private static int sum(String[] stringNumbers)
 	{
-		int sum = 0;
+		int sum = 0, num;
 
 		for(String number : stringNumbers)
-			sum += toInt(number);
+		{
+			num = toInt(number);
+
+			if(isNegetive(num)) throw new IllegalArgumentException("Negatives not allowed: " + number);
+
+			sum += num;
+		}
+		
 
 		return sum;
 	}
@@ -47,5 +54,10 @@ public class Calculator {
 		text = text.replaceFirst(delimiterSpecifier, "");
 		String[] split = text.split("\\r?\\n", 2);
 		return split[1].replaceAll(split[0], defaultDelim);
+	}
+
+	private static boolean isNegetive(int number)
+	{
+		return number < 0;
 	}
 }
