@@ -110,7 +110,13 @@ public class CalculatorTest {
 			fail("Should have thrown IllegalArgumentException");
 		}
 		catch( IllegalArgumentException e ) {
-			assertEquals("#, ! are not a specified delimiters.", e.getMessage());
+			assertEquals("#, ! are not specified delimiters.", e.getMessage());
 		}
+	}
+
+	@Test
+	public void testLegalDelimitersWithNoNumberInBetween()
+	{
+		assertEquals(79, Calculator.add("//[!][,%]\n45,,15,,5,%5,8,!1"));
 	}
 }

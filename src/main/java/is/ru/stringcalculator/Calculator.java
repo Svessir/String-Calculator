@@ -45,7 +45,7 @@ public class Calculator {
 	}
 
 	private static int toInt(String text) {
-		if(text == "") return 0;
+		if(text.isEmpty()) return 0;
 		
 		try{
 			return Integer.parseInt(text);
@@ -106,6 +106,6 @@ public class Calculator {
 			else if(errorMessage.length() > 0) isComma = true;
 		}
 
-		return errorMessage + ((isMultiple == true) ? " are not a specified delimiters." : " is not a specified delimiter.");
+		return errorMessage + ((isMultiple == true) ? " are not specified delimiters." : " is not a specified delimiter.");
 	}
 }
