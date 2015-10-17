@@ -101,4 +101,16 @@ public class CalculatorTest {
 			assertEquals("# is not a specified delimiter.", e.getMessage());
 		}
 	}
+
+	@Test
+	public void testMultipleNonNumberAndNonDelimiterSymbols()
+	{
+		try{
+			Calculator.add("45,15,5,5,8,1#2!4");
+			fail("Should have thrown IllegalArgumentException");
+		}
+		catch( IllegalArgumentException e ) {
+			assertEquals("#, ! are not a specified delimiters.", e.getMessage());
+		}
+	}
 }

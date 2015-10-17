@@ -93,14 +93,19 @@ public class Calculator {
 
 	private static String findIllegalDelimiters(String illegalString) {
 		String errorMessage = "";
-		for(int i = 0; i < illegalString.length(); i++)
-		{
+		boolean isMultiple = false, isComma = false;
+
+		for(int i = 0; i < illegalString.length(); i++) {
 			char symbol = illegalString.charAt(i);
 
-			if(!Character.isDigit(symbol))
-				errorMessage += (errorMessage.length() > 0) ? "," + symbol : symbol;
+			if(!Character.isDigit(symbol)) {
+				errorMessage += (isComma == true) ? ", " + symbol : symbol;
+				isMultiple = (isComma == true) ? true : isMultiple;
+				isComma = false;
+			}
+			else if(errorMessage.length() > 0) isComma = true;
 		}
 
-		return errorMessage + " is not a specified delimiter.";
+		return errorMessage + ((isMultiple == true) ? " are not a specified delimiters." : " is not a specified delimiter.");
 	}
 }
