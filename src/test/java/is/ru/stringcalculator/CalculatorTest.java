@@ -16,6 +16,7 @@ public class CalculatorTest {
 	@Test
 	public void testOneNumber() {
 		assertEquals(1, Calculator.add("1"));
+		assertEquals(2, Calculator.add("2"));
 	}
 
 	@Test
@@ -32,21 +33,19 @@ public class CalculatorTest {
 	}
 
 	@Test
-	public void testNewLineSeperator()
-	{
+	public void testNewLineSeperator() {
 		assertEquals(6, Calculator.add("1\n2,3"));
 	}
 
 	@Test
-	public void testUnknownDelimiter()
-	{
+	public void testUnknownDelimiter() {
 		assertEquals(3,Calculator.add("//;\n1;2"));
 		assertEquals(3,Calculator.add("//$\n1$2"));
-		assertEquals(3,Calculator.add("//b\n1b2"));	}
+		assertEquals(3,Calculator.add("//b\n1b2"));
+	}
 
 	@Test
-	public void testOneNegetiveInput()
-	{
+	public void testOneNegetiveInput() {
 		try {
 
 			Calculator.add("-1,2,3");
@@ -58,8 +57,7 @@ public class CalculatorTest {
 	}
 
 	@Test
-	public void testMultipleNegetiveInputs()
-	{
+	public void testMultipleNegetiveInputs() {
 		try {
 
 			Calculator.add("2,-4,3,-5");
@@ -71,27 +69,36 @@ public class CalculatorTest {
 	}
 
 	@Test
-	public void testIgnoreLargerThanThousand()
-	{
+	public void testIgnoreLargerThanThousand() {
 		assertEquals(2, Calculator.add("1001,2"));
 	}
 
 	@Test
-	public void testCustomDelimiterOfUnknownLength()
-	{
+	public void testCustomDelimiterOfUnknownLength() {
 		assertEquals(3, Calculator.add("//[ttt]\n1ttt2"));
 		assertEquals(6, Calculator.add("//[***]\n1***2***3"));
 	}
 
 	@Test
-	public void testMultipleUnknownDelimiters()
-	{
+	public void testMultipleUnknownDelimiters() {
 		assertEquals(6, Calculator.add("//[*][%]\n1*2%3"));
 	}
 
 	@Test
-	public void testMultipleDelimitersOfUnknownLength()
-	{
+	public void testMultipleDelimitersOfUnknownLength() {
 		assertEquals(6, Calculator.add("//[*****][%%%%%]\n1*****2%%%%%3\n0,0"));
+		assertEquals(106, Calculator.add("//[*][%][++++]\n1*2%3++++100"));
+	}
+
+	@Test
+	public void testNonNumberAndNonDelimiterSymbol()
+	{
+		try{
+			Calculator.add("45,15,5,5,8,1#2");
+			fail("Should have thrown IllegalArgumentException");
+		}
+		catch( IllegalArgumentException e ) {
+			assertEquals("# is not a specified delimiter.", e.getMessage());
+		}
 	}
 }

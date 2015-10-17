@@ -19,13 +19,11 @@ public class Calculator {
 		return sum(numbers);
 	}
 
-	private static int sum(String[] stringNumbers)
-	{
+	private static int sum(String[] stringNumbers) {
 		int sum = 0, num;
 		String negetiveNumbers = "";
 
-		for(String number : stringNumbers)
-		{
+		for(String number : stringNumbers) {
 			num = toInt(number);
 
 			if(isNegetive(num)) {
@@ -36,32 +34,36 @@ public class Calculator {
 			sum += (num > maxInt) ? 0 : num;
 		}
 		
-		if(!negetiveNumbers.isEmpty()) 
+		if(!negetiveNumbers.isEmpty())
 			throw new IllegalArgumentException("Negatives not allowed: " + negetiveNumbers);
 
 		return sum;
 	}
 
-	private static String[] splitIntoStringNumbers(String text)
-	{
+	private static String[] splitIntoStringNumbers(String text) {
 		return text.split("\\r?\\n|" + defaultDelim );
 	}
 
-	private static int toInt(String text)
-	{
+	private static int toInt(String text) {
 		if(text == "") return 0;
-		return Integer.parseInt(text);
+		
+		try{
+			return Integer.parseInt(text);
+		}
+		catch(NumberFormatException e) {
+			throw new IllegalArgumentException(findIllegalDelimiters(text));
+		}
 	}
 
-	private static boolean isCustomDelimiter(String text)
-	{
+	private static boolean isCustomDelimiter(String text) {
 		return text.startsWith(delimiterSpecifier);
 	}
 
-	private static String fixInput(String text)
-	{
+	private static String fixInput(String text) {
 		if(!isCustomDelimiter(text)) return text;
 
+		// Split into two strings on newline, where delimAndNumbers[0] is the delimiter specifications
+		// and delimAndNumbers[1] is the numbers that should be added calculated
 		String[] delimAndNumbers = text.split("\\r?\\n", 2);
 		text = delimAndNumbers[1];
 
@@ -69,8 +71,7 @@ public class Calculator {
 
 		String customDelimiter = null;
 
-		while(matcher.find())
-		{
+		while(matcher.find()) {
 			customDelimiter = matcher.group();
 			customDelimiter = customDelimiter.substring(1, customDelimiter.length() - 1);
 			text = replaceCustomDelimiter(text, customDelimiter);	
@@ -82,13 +83,24 @@ public class Calculator {
 		return text;
 	}
 
-	private static boolean isNegetive(int number)
-	{
+	private static boolean isNegetive(int number) {
 		return number < 0;
 	}
 
-	private static String replaceCustomDelimiter( String text, String customDelimiter )
-	{
+	private static String replaceCustomDelimiter( String text, String customDelimiter ) {
 		return text.replaceAll(Pattern.quote(customDelimiter), defaultDelim);
+	}
+
+	private static String findIllegalDelimiters(String illegalString) {
+		String errorMessage = "";
+		for(int i = 0; i < illegalString.length(); i++)
+		{
+			char symbol = illegalString.charAt(i);
+
+			if(!Character.isDigit(symbol))
+				errorMessage += (errorMessage.length() > 0) ? "," + symbol : symbol;
+		}
+
+		return errorMessage + " is not a specified delimiter.";
 	}
 }
